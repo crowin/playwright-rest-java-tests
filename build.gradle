@@ -5,17 +5,39 @@ plugins {
 group = 'com.github.crowin'
 version = '0.1'
 
+ext {
+    jUnitVersion = '5.10.0'
+    playwrightVersion = '1.46.0'
+    okhttp3Version = '4.12.0'
+    allureVersion = '2.30.0'
+    aspectJVersion = '1.9.21'
+    lombokVersion = '1.18.42'
+}
+
+configurations {
+    agent {
+        canBeResolved = true
+        canBeConsumed = true
+    }
+}
+
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    implementation 'com.microsoft.playwright:playwright:1.46.0'
-    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+    implementation "com.microsoft.playwright:playwright:$playwrightVersion"
+    implementation "com.squareup.okhttp3:okhttp:$okhttp3Version"
+    agent "org.aspectj:aspectjweaver:$aspectJVersion"
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.20.0'
 
-    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testAnnotationProcessor("org.projectlombok:lombok:$lombokVersion")
+    testImplementation platform("org.junit:junit-bom:$jUnitVersion")
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    testImplementation platform("io.qameta.allure:allure-bom:$allureVersion")
+    testImplementation "io.qameta.allure:allure-junit5"
+    testCompileOnly("org.projectlombok:lombok:$lombokVersion")
 }
 
 test {

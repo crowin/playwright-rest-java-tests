@@ -45,7 +45,7 @@ Open a URL and work with the current Page:
 
 ```java
 import com.microsoft.playwright.Page;
-import om.github.crowin.Playflow;
+import om.github.crowin.playflow.Playflow;
 
 Page page = Playflow.open("/login"); // resolves relative to playflow.baseUrl if set
 page.locator("#username").fill("standard_user");

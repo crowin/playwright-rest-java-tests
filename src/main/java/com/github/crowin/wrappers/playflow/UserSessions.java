@@ -1,4 +1,4 @@
-package om.github.crowin;
+package com.github.crowin.wrappers.playflow;
 
 import com.microsoft.playwright.options.Cookie;
 
