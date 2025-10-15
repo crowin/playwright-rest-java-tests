@@ -12,34 +12,59 @@ ext {
     allureVersion = '2.30.0'
     aspectJVersion = '1.9.21'
     lombokVersion = '1.18.42'
+    jacksonBindVersion = '2.20.0'
 }
 
-configurations {
-    agent {
-        canBeResolved = true
-        canBeConsumed = true
+allprojects {
+    group = 'com.github.crowin'
+    version = '0.1'
+
+    apply plugin: 'java'
+    apply plugin: 'java-library'
+
+    configurations {
+        agent {
+            canBeResolved = true
+            canBeConsumed = true
+        }
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        agent "org.aspectj:aspectjweaver:$aspectJVersion"
+        implementation 'org.apache.commons:commons-lang3:3.19.0'
+        implementation "com.fasterxml.jackson.core:jackson-databind:$jacksonBindVersion"
+        annotationProcessor("org.projectlombok:lombok:$lombokVersion")
+
+        compileOnly("org.projectlombok:lombok:$lombokVersion")
+        testAnnotationProcessor("org.projectlombok:lombok:$lombokVersion")
+        testCompileOnly("org.projectlombok:lombok:$lombokVersion")
+        testImplementation platform("org.junit:junit-bom:$jUnitVersion")
+        testImplementation 'org.junit.jupiter:junit-jupiter'
+        testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+        implementation platform("io.qameta.allure:allure-bom:$allureVersion")
+        implementation "io.qameta.allure:allure-junit5"
     }
 }
 
-repositories {
-    mavenCentral()
+project(':common') {
+    dependencies {
+        implementation "com.squareup.okhttp3:okhttp:$okhttp3Version"
+    }
 }
 
-dependencies {
-    implementation "com.microsoft.playwright:playwright:$playwrightVersion"
-    implementation "com.squareup.okhttp3:okhttp:$okhttp3Version"
-    agent "org.aspectj:aspectjweaver:$aspectJVersion"
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.20.0'
-
-    testAnnotationProcessor("org.projectlombok:lombok:$lombokVersion")
-    testImplementation platform("org.junit:junit-bom:$jUnitVersion")
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-    testImplementation platform("io.qameta.allure:allure-bom:$allureVersion")
-    testImplementation "io.qameta.allure:allure-junit5"
-    testCompileOnly("org.projectlombok:lombok:$lombokVersion")
+project(':tests-ui') {
+    dependencies {
+        implementation project(':common')
+        implementation "com.microsoft.playwright:playwright:$playwrightVersion"
+    }
 }
 
-test {
-    useJUnitPlatform()
+project(':tests-api') {
+    dependencies {
+        implementation project(':common')
+    }
 }

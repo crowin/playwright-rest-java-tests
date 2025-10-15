@@ -1,1 +1,4 @@
-rootProject.name = 'playflow'
+rootProject.name = 'market-tests'
+include 'common'
+include 'tests-ui'
+include 'tests-api'
