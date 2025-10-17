@@ -1,7 +1,7 @@
 package com.github.crowin.core.api.model;
 
-public record ApiResponse<T>(
-        ListResponseData<T> data
-) {
+import com.github.crowin.core.api.model.market.ProductsDto;
 
-}
+public record ApiResponse<T>(
+        T data
+) {}

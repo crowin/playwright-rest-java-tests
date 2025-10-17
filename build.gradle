@@ -13,6 +13,7 @@ ext {
     aspectJVersion = '1.9.21'
     lombokVersion = '1.18.42'
     jacksonBindVersion = '2.20.0'
+    assertjVersion = '3.27.6'
 }
 
 allprojects {
@@ -47,6 +48,7 @@ allprojects {
         testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
         implementation platform("io.qameta.allure:allure-bom:$allureVersion")
         implementation "io.qameta.allure:allure-junit5"
+        testImplementation "org.assertj:assertj-core:$assertjVersion"
     }
 }
 

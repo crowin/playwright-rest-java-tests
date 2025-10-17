@@ -1,9 +1,9 @@
-package com.github.crowin.core.api.model;
+package com.github.crowin.core.api.model.market;
 
 import java.util.List;
 
-public record ListResponseData<T>(
-        List<T> items,
+public record ProductsDto(
+        List<ProductItem> items,
         Integer current,
         Integer totalPages,
         Integer totalItems
